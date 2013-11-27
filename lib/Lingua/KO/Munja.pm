@@ -7,24 +7,22 @@ require Exporter;
 );
 use warnings;
 use strict;
-our $VERSION = 0.03;
+our $VERSION = 0.04;
 use Convert::Moji 'make_regex';
 
 my $verbose;
 
 sub makearegex
 {
-my @possibles = @_;
-@possibles = map {$_ =~ s/^-$//; $_} @possibles;
-make_regex (@possibles);
+    my @possibles = @_;
+    @possibles = map {$_ =~ s/^-$//; $_} @possibles;
+    make_regex (@possibles);
 }
 
 my @initial = qw(
     g   kk  n   d   tt  r   m   b   pp  s   ss  -   j   jj
     ch  k   t   p   h
 );
-
-
 
 my $initial_re = makearegex (@initial);
 
@@ -57,9 +55,9 @@ sub hangul
         }
     }
     if ($verbose) {
-    print "Initial = $initial, peak = $peak, final = $final\n";
-    print "Initial = $initial{$initial}, peak = $peak{$peak}, final = $final{$final}\n";
-}
+	print "Initial = $initial, peak = $peak, final = $final\n";
+	print "Initial = $initial{$initial}, peak = $peak{$peak}, final = $final{$final}\n";
+    }
     my $x = (($initial{$initial} * 21) + $peak{$peak}) * 28 + $final{$final};
     my $hangul = chr (0xAC00 + $x);
     return $hangul;
@@ -119,10 +117,8 @@ sub romanize
 sub hangul2roman
 {
     my ($hangul) = @_;
-#    print "$hangul\n";
     $hangul =~ s/(\p{Hangul})/romanize ($1)/ge;
     $hangul =~ s/-//g;
-#    print "$hangul\n";
     return $hangul;
 }
 
@@ -174,7 +170,7 @@ Convert hangul to romanized Korean.
 
 Ben Bullock, <bkb@cpan.org>
 
-=head1 COPYRIGHT
+=head1 COPYRIGHT AND LICENCE
 
 Portions of this are taken from L<Lingua::KO::Romanize::Hangul>,
 version 0.20, by Yusuke Kawasaki, Copyright (c) 1998-2008 Yusuke
